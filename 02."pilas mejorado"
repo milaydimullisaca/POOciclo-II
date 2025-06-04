@@ -1,0 +1,142 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+// Muestra la pila del tope hacia la base
+void mostrarPila(stack<int> P)
+{
+    cout << "[ ";
+    while (!P.empty())
+    {
+        cout << P.top() << " ";
+        P.pop();
+    }
+    cout << "]" << endl;
+}
+
+
+// Busca un elemento en la pila
+bool buscarElemento(stack<int> T, int valor)
+{
+    while (!T.empty())
+    {
+        if (T.top() == valor)
+            return true;
+        T.pop();
+    }
+    return false;
+}
+
+// Se clona una pila usando doble pila
+stack<int> clonarPila(stack<int> original)
+{
+    stack<int> S, clon;
+    while (!original.empty())
+    {
+        S.push(original.top());
+        original.pop();
+    }
+    while (!S.empty())
+    {
+        int val = S.top();
+        clon.push(val);
+        original.push(val);
+        S.pop();
+    }
+    return clon;
+}
+
+// Se invierte una pila usando T y D como auxiliares
+stack<int> invertirPila(stack<int> pila)
+{
+    stack<int> T, D;
+
+    while (!pila.empty())
+    {
+        T.push(pila.top());
+        pila.pop();
+    }
+
+    while (!T.empty())
+    {
+        D.push(T.top());
+        T.pop();
+    }
+    return D;
+}
+
+// Vacía completamente la pila
+void vaciarPila(stack<int>& T)
+{
+    while (!T.empty())
+    {
+        T.pop();
+    }
+}
+int main()
+{
+    stack<int> miPila;
+    int opc;
+    do
+    {
+        cout << "Escoger cualquiera de las opciones" << endl;
+        cout << "1. Agregar elemento" << endl;
+        cout << "2. Mostrar pila" << endl;
+        cout << "3. Buscar elemento" << endl;
+        cout << "4. Clonar pila" << endl;
+        cout << "5. Invertir pila" << endl;
+        cout << "6. Vaciar pila" << endl;
+        cout << "0. Salir" << endl;
+        cin >> opc;
+        switch (opc)
+        {
+        case 1:
+        {
+            int valor;
+            cout << "Ingrese un valor: ";
+            cin >> valor;
+            miPila.push(valor);
+            break;
+        }
+        case 2:
+            cout << "Contenido actual de la pila: ";
+            mostrarPila(miPila);
+            break;
+        case 3:
+        {
+            int valor;
+            cout << "Valor a buscar: ";
+            cin >> valor;
+            if (buscarElemento(miPila, valor))
+                cout << "El valor SÍ está en la pila" << endl;
+            else
+                cout << "El valor NO se encuentra" << endl;
+            break;
+        }
+        case 4:
+        {
+            stack<int> copia = clonarPila(miPila);
+            cout << "Pila clonada: ";
+            mostrarPila(copia);
+            break;
+        }
+        case 5:
+        {
+            stack<int> invertida = invertirPila(miPila);
+            cout << "Pila invertida: ";
+            mostrarPila(invertida);
+            break;
+        }
+        case 6:
+            vaciarPila(miPila);
+            cout << "Pila vaciada" << endl;
+            break;
+        case 0:
+            cout << "Hasta luego" << endl;
+            break;
+        default:
+            cout << "Opción inválida" << endl;
+        }
+    } while (opc != 0);
+    return 0;
+}
