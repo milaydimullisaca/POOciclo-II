@@ -1,0 +1,19 @@
+#include <stack>
+using namespace std;
+int main()
+{
+    stack<int> S;
+    S.push(5);
+    S.push(35);
+    S.push(15);
+    S.push(20);
+    S.push(12);
+    stack<int> T=S;
+    while(!T.empty())
+    {
+        cout<< T.top ()<<",";
+        T.pop();
+    }
+    cout << endl;
+    return 0;
+}
