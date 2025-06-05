@@ -1,0 +1,94 @@
+#include <iostream>
+using namespace std;
+//clase Nodo
+class Nodo{
+//se declara publico
+   public:
+    int Info;
+    //puntero al siguiente nodo
+    Nodo *Sig;
+    //constructor del nodo
+    Nodo(int I=0,Nodo *S=NULL)
+    {   Info=I;
+        Sig=S;
+    }
+};
+//clase para la lista enlazada
+class Lista
+{   public:
+//puntero al primer nodo
+    Nodo *Ini;
+//constructor de la lista
+    Lista()
+    {   Ini=NULL;//se inicializa el primer nodo en NULL
+    }
+// metodo para insertar el nuevo nodo en la lista
+    void Insertar(int Dato)
+    {   Ins(Dato, Ini);
+    }
+//metodo recursivo para insertar un nuevo nodo en la lista
+    void Ins(int Dato, Nodo *&S)
+//condicional:si la lista esta vacia o el dato es menor que el primer nodo, entonces se crea un nuevo nodo
+    {   if(S==NULL||Dato<S->Info)
+            S=new Nodo(Dato, S);
+        else
+//si no, se llama de forma recursiva el metodo ins para el siguiente nodo
+            Ins(Dato,S->Sig);
+//metodo para eliminar un nodo de la lista
+    void Eliminar(int Dato)
+    {   Eli(Dato, Ini);//eli para realizar la elimminacion
+    }
+//metodo recursivo
+    void Eli(int Dato, Nodo *&S)
+//si la lista no esta vacia
+    {   if(S!=NULL){
+//si el dato  es igual con el nodo actual, se elimina el nodo
+        if(Dato==S->Info){
+            Nodo *T;
+                T=S;
+                S=S->Sig;
+                delete T;//se elimina el nodo
+            }
+            else
+//si no, se llama recursivamente al metodo Eli para el siguiente nodo
+                Eli(Dato,S->Sig);
+        }
+    }
+//Metodo para mostrar los nodos de la lista
+    void Mostrar()
+    {   Nodo *S;
+        cout<<"->"
+//bucle para recorrer la lista y se muestra la informacion de cada nodo
+        for(S=Ini;S!=NULL;S=S->Sig)
+            cout<<"("<<S->Info<<")->";
+        cout<<endl;
+    }
+};
+int main()
+{   Lista L;//instancia de la clase lista
+    char opc;//opcion para seleccion del usuario
+    int dato;//dato a ingresar por el usuario
+//bucle principal
+    while(1)
+    {   L.Mostrar();//se muestra la lista
+        cout<<"(i)nsertar, (e)liminar, (s)alir : ";
+        cin>>opc;//se lee la opcion escogida por el usuario
+        switch(opc)// se usa switch para procesar la opcion escogida
+        {   case 'i':
+                cout<<"Ingrese N : ";
+                cin>>dato;//se lee el dato a insertar
+                L.Insertar(dato);//se inserta el dato en la lista
+                break;
+            case 'e':
+                cout<<"Ingrese N : ";
+                cin>>dato;//se lee el dato a eliminar
+                L.Eliminar(dato);//se elimina el dato de la lista
+                break;
+            case 's':
+                return 0;//sale del programa
+        }
+
+    }
+
+    return 0;
+}
